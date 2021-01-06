@@ -119,6 +119,11 @@ module.exports = function (defaults) {
         'ember-composable-helpers': {
             only: ['optional', 'toggle']
         },
+        'ember-froala-editor': {
+            // languages: [ 'es','fr','de'],
+            plugins  : true,
+            themes   : 'royal'
+        },
         outputPaths: {
             app: {
                 html: isProduction ? 'index.min.html' : 'index.html',

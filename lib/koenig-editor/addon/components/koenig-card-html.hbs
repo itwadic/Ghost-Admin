@@ -15,12 +15,16 @@
     @editor={{this.editor}}
 >
     {{#if this.isEditing}}
-        <GhCmEditor @value={{this.payload.html}}
+        <FroalaEditor
+           @content={{html-safe this.payload.html}}
+           @update={{action (to-string (fn (mut this.payload.html)))}}
+        />
+        {{!-- <GhCmEditor @value={{this.payload.html}}
             @class="koenig-card-html--editor"
             @autofocus=true
             @lineWrapping=true
             @update={{action "updateHtml"}}
-        />
+        /> --}}
     {{else}}
         <div class="koenig-card-html-rendered">{{{sanitize-html this.payload.html}}}</div>
         <div class="koenig-card-click-overlay"></div>
