@@ -111,119 +111,124 @@ if (process.env.CI) {
 
 module.exports = function (defaults) {
     let app = new EmberApp(defaults, {
-        addons: {blacklist},
-        'ember-cli-babel': {
-            optional: ['es6.spec.symbols'],
-            includePolyfill: false
-        },
-        'ember-composable-helpers': {
-            only: ['optional', 'toggle']
-        },
-        'ember-froala-editor': {
-            // languages: [ 'es','fr','de'],
-            plugins  : true,
-            themes   : 'royal',
-            key : 'UBB7jF4D4G3I3A3C10aA-16sofD3svlhsagmhiczjbdarB1bwsqzF3uyibA2B6C4D4F4C2E2C3G2I1=='
-        },
-        outputPaths: {
-            app: {
-                html: isProduction ? 'index.min.html' : 'index.html',
-                js: assetLocation('ghost.js'),
-                css: {
-                    app: assetLocation('ghost.css'),
-                    // TODO: find a way to use the .min file with the lazyLoader
-                    'app-dark': 'assets/ghost-dark.css'
-                }
-            },
-            vendor: {
-                js: assetLocation('vendor.js'),
-                css: assetLocation('vendor.css')
-            }
-        },
-        fingerprint: {
-            enabled: isProduction,
-            extensions: ['js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'map']
-        },
-        minifyJS: {
-            options: {
-                output: {
-                    semicolons: true
-                }
-            }
-        },
-        minifyCSS: {
-            // postcss already handles minification and this was stripping required CSS
-            enabled: false
-        },
-        nodeAssets: {
-            codemirror: codemirrorAssets(),
-            simplemde: simplemdeAssets()
-        },
-        postcssOptions: {
-            compile: {
-                enabled: true,
-                plugins: [
-                    {
-                        module: postcssEasyImport,
-                        options: {
-                            path: ['app/styles']
-                        }
-                    },
-                    {
-                        module: postcssCustomProperties,
-                        options: {
-                            preserve: false
-                        }
-                    },
-                    {
-                        module: postcssColorModFunction
-                    },
-                    {
-                        module: postcssCustomMedia
-                    },
-                    {
-                        module: autoprefixer
-                    },
-                    {
-                        module: cssnano,
-                        options: {
-                            zindex: false,
-                            // cssnano sometimes minifies animations incorrectly causing them to break
-                            // See: https://github.com/ben-eb/gulp-cssnano/issues/33#issuecomment-210518957
-                            reduceIdents: {
-                                keyframes: false
-                            },
-                            discardUnused: {
-                                keyframes: false
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        svgJar: {
-            strategy: 'inline',
-            stripPath: false,
-            sourceDirs: [
-                'public/assets/icons',
-                'lib/koenig-editor/public/icons'
-            ],
-            optimizer: {
-                plugins: [
-                    {prefixIds: true},
-                    {cleanupIds: false},
-                    {removeDimensions: true},
-                    {removeTitle: true},
-                    {removeXMLNS: true},
-                    // Transforms on groups are necessary to work around Firefox
-                    // not supporting transform-origin on line/path elements.
-                    {convertPathData: {
-                        applyTransforms: false
-                    }},
-                    {moveGroupAttrsToElems: false}
-                ]
-            }
-        }
+      addons: {blacklist},
+      'ember-cli-babel': {
+          optional: ['es6.spec.symbols'],
+          includePolyfill: false
+      },
+      'ember-composable-helpers': {
+          only: ['optional', 'toggle']
+      },
+      'ember-froala-editor': {
+          // languages: [ 'es','fr','de'],
+          plugins  : true,
+          themes   : 'royal',
+          key : 'UBB7jF4D4G3I3A3C10aA-16sofD3svlhsagmhiczjbdarB1bwsqzF3uyibA2B6C4D4F4C2E2C3G2I1=='
+      },
+      outputPaths: {
+          app: {
+              html: isProduction ? 'index.min.html' : 'index.html',
+              js: assetLocation('ghost.js'),
+              css: {
+                  app: assetLocation('ghost.css'),
+                  // TODO: find a way to use the .min file with the lazyLoader
+                  'app-dark': 'assets/ghost-dark.css'
+              }
+          },
+          vendor: {
+              js: assetLocation('vendor.js'),
+              css: assetLocation('vendor.css')
+          }
+      },
+      fingerprint: {
+          enabled: isProduction,
+          extensions: ['js', 'css', 'png', 'jpg', 'jpeg', 'gif', 'map']
+      },
+      minifyJS: {
+          options: {
+              output: {
+                  semicolons: true
+              }
+          }
+      },
+      minifyCSS: {
+          // postcss already handles minification and this was stripping required CSS
+          enabled: false
+      },
+      nodeAssets: {
+          codemirror: codemirrorAssets(),
+          simplemde: simplemdeAssets()
+      },
+      postcssOptions: {
+          compile: {
+              enabled: true,
+              plugins: [
+                  {
+                      module: postcssEasyImport,
+                      options: {
+                          path: ['app/styles']
+                      }
+                  },
+                  {
+                      module: postcssCustomProperties,
+                      options: {
+                          preserve: false
+                      }
+                  },
+                  {
+                      module: postcssColorModFunction
+                  },
+                  {
+                      module: postcssCustomMedia
+                  },
+                  {
+                      module: autoprefixer
+                  },
+                  {
+                      module: cssnano,
+                      options: {
+                          zindex: false,
+                          // cssnano sometimes minifies animations incorrectly causing them to break
+                          // See: https://github.com/ben-eb/gulp-cssnano/issues/33#issuecomment-210518957
+                          reduceIdents: {
+                              keyframes: false
+                          },
+                          discardUnused: {
+                              keyframes: false
+                          }
+                      }
+                  }
+              ]
+          }
+      },
+      svgJar: {
+          strategy: 'inline',
+          stripPath: false,
+          sourceDirs: [
+              'public/assets/icons',
+              'lib/koenig-editor/public/icons'
+          ],
+          optimizer: {
+              plugins: [
+                  {prefixIds: true},
+                  {cleanupIds: false},
+                  {removeDimensions: true},
+                  {removeTitle: true},
+                  {removeXMLNS: true},
+                  // Transforms on groups are necessary to work around Firefox
+                  // not supporting transform-origin on line/path elements.
+                  {convertPathData: {
+                      applyTransforms: false
+                  }},
+                  {moveGroupAttrsToElems: false}
+              ]
+          }
+      },
+
+      'ember-bootstrap': {
+        bootstrapVersion: 4,
+        importBootstrapCSS: true
+      }
     });
 
     // Stop: Normalize
