@@ -1,18 +1,17 @@
-import { expect } from 'chai';
-import { describe, it } from 'mocha';
-import { setupRenderingTest } from 'ember-mocha';
-import { render } from '@ember/test-helpers';
-import { hbs } from 'ember-cli-htmlbars';
+import {describe, it} from 'mocha';
+import {expect} from 'chai';
+import {hbs} from 'ember-cli-htmlbars';
+import {render} from '@ember/test-helpers';
+import {setupRenderingTest} from 'ember-mocha';
 
-describe('Integration | Helper | to-string', function() {
-  setupRenderingTest();
+describe('Integration | Helper | to-string', function () {
+    setupRenderingTest();
 
-  // TODO: Replace this with your real tests.
-  it('renders', async function() {
-    this.set('inputValue', '1234');
+    it('renders', async function () {
+        this.set('inputValue', '1234');
 
-    await render(hbs`{{to-string inputValue}}`);
+        await render(hbs`{{to-string inputValue}}`);
 
-    expect(this.element.textContent.trim()).to.equal('1234');
-  });
+        expect(this.element.textContent.trim()).to.equal('1234');
+    });
 });
