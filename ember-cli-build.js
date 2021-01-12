@@ -121,8 +121,8 @@ module.exports = function (defaults) {
       },
       'ember-froala-editor': {
           // languages: [ 'es','fr','de'],
-          plugins  : true,
-          themes   : 'royal',
+          plugins  : [ 'align', 'code_view', 'colors', 'embedly', 'emoticons', 'entities', 'font_family', 'font_size', 'image', 'line_breaker', 'line_height', 'link', 'lists', 'paragraph_format', 'quick_insert', 'quote', 'special_characters', 'table', 'url', 'word_paste' ],
+          themes   : 'dark',
           key : 'UBB7jF4D4G3I3A3C10aA-16sofD3svlhsagmhiczjbdarB1bwsqzF3uyibA2B6C4D4F4C2E2C3G2I1=='
       },
       outputPaths: {
