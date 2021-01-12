@@ -103,6 +103,7 @@ export function initialize(/* application */) {
     focus: false,
     plugin: 'customPlugin',
     callback: function () {
+      this.selection.save();
       this.customPlugin.showPopup();
     }
   });
@@ -134,6 +135,7 @@ export function initialize(/* application */) {
         var btn_class = $('#call-to-action').attr('class'); 
         var content = $('#call-to-action').html(); 
         var html = '<a href="'+url+'" class="'+btn_class+'" '+blank+'>'+content+'</a>';
+        this.selection.restore();
         this.html.insert(html);
         this.customPlugin.hidePopup();
     }
