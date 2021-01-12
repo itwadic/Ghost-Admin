@@ -14,7 +14,7 @@
     @onLeaveEdit={{action "leaveEditMode"}}
     @editor={{this.editor}}
 >
-    {{#if this.isEditing}}
+    {{!-- {{#if this.isEditing}} --}}
         <FroalaEditor
            @content={{html-safe this.payload.html}}
            @update={{action (to-string (fn (mut this.payload.html)))}}
@@ -25,8 +25,8 @@
             @lineWrapping=true
             @update={{action "updateHtml"}}
         /> --}}
-    {{else}}
+    {{!-- {{else}}
         <div class="koenig-card-html-rendered">{{{sanitize-html this.payload.html}}}</div>
         <div class="koenig-card-click-overlay"></div>
-    {{/if}}
+    {{/if}} --}}
 </KoenigCard>
