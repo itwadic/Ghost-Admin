@@ -142,5 +142,8 @@
       "lib/asset-delivery",
       "lib/koenig-editor"
     ]
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
   }
 }
