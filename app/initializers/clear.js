@@ -1,5 +1,7 @@
+import axios from 'axios';
 import FroalaEditor from 'froala-editor';
 import bootstrap from 'bootstrap';
+import ghostPaths from 'ghost-admin/utils/ghost-paths';
 
 export function initialize(/* application */) {
     
@@ -134,6 +136,8 @@ export function initialize(/* application */) {
         var url = $('#call-to-action-url').val();   
         var btn_class = $('#call-to-action').attr('class'); 
         var content = $('#call-to-action').html(); 
+        //TODO
+        makeRequest(url,content);
         var html = '<a href="'+url+'" class="'+btn_class+'" '+blank+'>'+content+'</a>';
         this.selection.restore();
         this.html.insert(html);
@@ -141,6 +145,33 @@ export function initialize(/* application */) {
     }
   });
       
+}
+
+function makeRequest(url,btn_txt){
+
+  let urlPath = `${ghostPaths().apiRoot}/gTag`;
+
+  // fetch(urlPath,{
+  //   method: "post",
+  //   body: {
+  //     "url": url,
+  //     "btn_txt": btn_txt,
+  //   }
+  // }).then(data => {
+  //   console.log(data.data);
+  // });
+
+  axios.post(urlPath,{
+    "url": url,
+    "btn_txt": btn_txt,
+  }
+  )
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 }
 
 export default {
