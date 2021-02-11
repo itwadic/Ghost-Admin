@@ -31,14 +31,17 @@ export function initialize(/* application */){
             var template = {
                 buttons: popUpButtons,
                 custom_layer: '<div class="custom-layer" style="padding:20px; width:300px; height:400px">' +
-                                    '<div id="old-button">' +
-                                        '<div class="cta-list form-group">' +
+                                    '<div id="old-button" style="display:none">' +
+                                        '<div class="form-group">' +
+                                            '<label>CTAs List</label>' +
+                                            '<div class="cta-list">' +
+                                            '</div>' +
                                         '</div>' +
                                         '<div id="cta-button">' +
                                         '</div>' +
                                     '</div>' +
                                     '<div id="new-button">' +
-                                        '<button class="btn btn-primary btn-lg" id="call-to-action">New call-to-action</button><hr>' + 
+                                        '<button class="btn btn-primary btn-lg" id="call-to-action">New call-to-action</button><hr style="margin: 1.2em 0;">' + 
                                         '<div class="form-group">' +
                                             '<label>Button content</label>' +
                                             '<input type="text" value="New call-to-action" class="form-control" id="call-to-action-btn-content">' +
@@ -144,7 +147,7 @@ export function initialize(/* application */){
             if ($('#call-to-action-new-window').prop('checked')) {
                 blank = 'target=_blank';
             }
-            var url = $('#call-to-action-url').val();   
+            var url = addhttp($('#call-to-action-url').val());   
             var btnClass = $('#call-to-action').attr('class'); 
             var content = $('#call-to-action').html(); 
             
@@ -200,8 +203,10 @@ function getCtaList(){
                 html += '</select>';
 
                 $('.cta-list').html(html);
+                $('#old-button').show();
             } else {
                 $('.cta-list').html('');
+                $('#old-button').hide();
             }
         })
         .catch(function () {
@@ -223,6 +228,19 @@ function getCta(id){
                 $('#cta-type').val('old');
             }
         });
+}
+
+function addhttp(url) {
+    if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+        url = "http://" + url;
+    }
+    
+    var lastChar = url.substr(-1);
+    if (lastChar != '/') {         
+       url = url + '/';            
+    }
+
+    return url;
 }
 
 export default {
