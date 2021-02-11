@@ -1,5 +1,4 @@
 import axios from 'axios';
-import bootstrap from 'bootstrap';
 import FroalaEditor from 'froala-editor';
 import ghostPaths from 'ghost-admin/utils/ghost-paths';
 
@@ -25,25 +24,36 @@ export function initialize(/* application */){
                 popUpButtons += editor.button.buildList(editor.opts.popupButtons);
                 popUpButtons += '</div>';
             }
-
+            
+            getCtaList(); 
+            
             // Load popup template.
             var template = {
                 buttons: popUpButtons,
-                custom_layer: '<div class="custom-layer" style="padding:20px; width:300px; height:300px">' +
-                                    '<button class="btn btn-primary btn-lg" id="call-to-action">New call-to-action</button><hr>' + 
-                                    '<div class="form-group">' +
-                                        '<label>Button content</label>' +
-                                        '<input type="text" value="New call-to-action" class="form-control" id="call-to-action-btn-content">' +
+                custom_layer: '<div class="custom-layer" style="padding:20px; width:300px; height:400px">' +
+                                    '<div id="old-button">' +
+                                        '<div class="cta-list form-group">' +
+                                        '</div>' +
+                                        '<div id="cta-button">' +
+                                        '</div>' +
                                     '</div>' +
-                                    '<div class="form-group">' +
-                                        '<label>Enter Url</label>' +
-                                        '<input type="text" class="form-control" id="call-to-action-url">' +
-                                    '</div>' +
-                                    '<div class="form-check">' +
-                                        '<input class="form-check-input" type="checkbox" value="1" id="call-to-action-new-window">' +
-                                        '<label class="form-check-label">&nbsp;&nbsp;' +
-                                            'Open page in new window' +
-                                        '</label>' +
+                                    '<div id="new-button">' +
+                                        '<button class="btn btn-primary btn-lg" id="call-to-action">New call-to-action</button><hr>' + 
+                                        '<div class="form-group">' +
+                                            '<label>Button content</label>' +
+                                            '<input type="text" value="New call-to-action" class="form-control" id="call-to-action-btn-content">' +
+                                        '</div>' +
+                                        '<div class="form-group">' +
+                                            '<label>Enter Url</label>' +
+                                            '<input type="text" class="form-control" id="call-to-action-url">' +
+                                            '<input type="hidden" id="cta-type">' +
+                                        '</div>' +
+                                        '<div class="form-check">' +
+                                            '<input class="form-check-input" type="checkbox" value="1" id="call-to-action-new-window">' +
+                                            '<label class="form-check-label">&nbsp;&nbsp;' +
+                                                'Open page in new window' +
+                                            '</label>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</div>'
             };
@@ -128,17 +138,28 @@ export function initialize(/* application */){
         undo: false,
         focus: false,
         callback: function () {   
+            var html;
             var blank = '';
             
             if ($('#call-to-action-new-window').prop('checked')) {
                 blank = 'target=_blank';
             }
             var url = $('#call-to-action-url').val();   
-            var btn_class = $('#call-to-action').attr('class'); 
+            var btnClass = $('#call-to-action').attr('class'); 
             var content = $('#call-to-action').html(); 
-            //TODO
-            makeRequest(url,content);
-            var html = '<a href="' + url + '" class="' + btn_class + '" ' + blank + '>' + content + '</a>';
+            
+            if ($('#cta-type').val() === 'old') {
+                html = $('#cta-button').html();
+                $('#cta-list').val('');
+                $('#cta-button').html('');
+                $('#new-button').show();
+                $('#cta-type').val('new');
+            } else {
+                html = '<a href="' + url + '" class="' + btnClass + '" ' + blank + '>' + content + '</a>';
+                //TODO
+                makeRequest(url, content, html);
+            }
+                        
             this.selection.restore();
             this.html.insert(html);
             this.customPlugin.hidePopup();
@@ -146,19 +167,62 @@ export function initialize(/* application */){
     });
 }
 
-function makeRequest(url,btnTxt){
+function makeRequest(url, btnTxt, cta){
     let urlPath = `${ghostPaths().apiRoot}/gTag`;
 
     axios.post(urlPath,{
-        'url': url,
-        'btn_txt': btnTxt
+        url: url,
+        btn_txt: btnTxt,
+        cta: cta
     })
-    .then(function (response) {
-        console.log(response);
-    })
-    .catch(function (error) {
-        console.log(error);
-      });
+        .then(function () {
+            getCtaList();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function getCtaList(){
+    let urlPath = `${ghostPaths().apiRoot}/getCtaList`;
+
+    axios.get(urlPath)
+        .then(function (response) {
+            var data = response.data.list;
+            
+            if (data.length) {
+                var html = '<select name="cta-list" id="cta-list" class="form-control"><option value="">Select One</option>';
+
+                data.forEach (async function (record) {
+                    html += '<option value="' + record.id + '">' + record.cta_name + '</option>';
+                });
+
+                html += '</select>';
+
+                $('.cta-list').html(html);
+            } else {
+                $('.cta-list').html('');
+            }
+        })
+        .catch(function () {
+            $('.cta-list').html('');
+        });
+}
+
+function getCta(id){
+    let urlPath = `${ghostPaths().apiRoot}/getCta?id=${id}`;
+
+    axios.get(urlPath)
+        .then(function (response) {
+            var data = response.data.record;
+
+            if (data.cta) {
+                
+                $('#cta-button').html(data.cta);
+                $('#new-button').hide();
+                $('#cta-type').val('old');
+            }
+        });
 }
 
 export default {
@@ -168,6 +232,16 @@ export default {
 $(document).ready(function () {
     $('body').on('keyup', '#call-to-action-btn-content', function (){ 
         $('#call-to-action').html($(this).val());  
+    });
+    
+    $('body').on('change', '#cta-list', function (){
+        if ($(this).val() !== '') {
+            getCta($(this).val());
+        } else {
+            $('#cta-button').html('');
+            $('#new-button').show();
+            $('#cta-type').val('new');
+        }
     });
 });
 
