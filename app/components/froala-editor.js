@@ -2,7 +2,7 @@ import FroalaEditorComponent from 'ember-froala-editor/components/froala-editor'
 
 export default class FroalaEditor extends FroalaEditorComponent {
   options = {
-        key: 'UBB7jF4D4G3I3A3C10aA-16sofD3svlhsagmhiczjbdarB1bwsqzF3uyibA2B6C4D4F4C2E2C3G2I1==',
+        key: 'xGE6oE3A3B3A10A5C5fLUQZf1ASFb1EFRNh1Hb1BCCQDUHnA8B6E5G5B1C3F3A1B8B6==',
         toolbarInline: true,
         toolbarButtons:  {
             // Key represents the more button from the toolbar.
