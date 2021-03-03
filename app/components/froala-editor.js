@@ -4,6 +4,7 @@ export default class FroalaEditor extends FroalaEditorComponent {
   options = {
         key: 'xGE6oE3A3B3A10A5C5fLUQZf1ASFb1EFRNh1Hb1BCCQDUHnA8B6E5G5B1C3F3A1B8B6==',
         toolbarInline: true,
+        pastePlain: true,
         toolbarButtons:  {
             // Key represents the more button from the toolbar.
             moreText: {
