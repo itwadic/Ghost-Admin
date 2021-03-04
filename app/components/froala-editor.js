@@ -32,6 +32,9 @@ export default class FroalaEditor extends FroalaEditorComponent {
               buttonsVisible: 2
             }
         },
-        heightMin: 300
+        iframeStyleFiles: ['/ghost/assets/vendor.css'],
+        imageUploadURL: 'http://i.froala.com/upload',
+        heightMin: 300,
+        iframe: true
   };
 }

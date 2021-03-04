@@ -17,7 +17,7 @@
     {{!-- {{#if this.isEditing}} --}}
         <FroalaEditor
            @content={{html-safe this.payload.html}}
-           @update={{action (to-string (fn (mut this.payload.html)))}}
+           @update={{action "updateHtml"}}
         />
         {{!-- <GhCmEditor @value={{this.payload.html}}
             @class="koenig-card-html--editor"
