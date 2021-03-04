@@ -32,7 +32,7 @@ export default class FroalaEditor extends FroalaEditorComponent {
               buttonsVisible: 2
             }
         },
-        iframeStyleFiles: ['/ghost/assets/vendor.css'],
+        // iframeStyleFiles: ['/ghost/assets/vendor.css'],
         imageUploadURL: 'http://i.froala.com/upload',
         requestWithCORS: false,
         iframeStyle: '.fr-view { margin: 0; padding: 0; }',
