@@ -33,7 +33,8 @@ export default class FroalaEditor extends FroalaEditorComponent {
             }
         },
         iframeStyleFiles: ['/ghost/assets/vendor.css'],
-        imageUploadURL: 'https://i.froala.com/upload',
+        imageUploadURL: 'http://i.froala.com/upload',
+        requestWithCORS: false,
         iframeStyle: '.fr-view { margin: 0; padding: 0; }',
         heightMin: 300,
         iframe: true
