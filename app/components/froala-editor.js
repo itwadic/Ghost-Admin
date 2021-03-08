@@ -32,8 +32,17 @@ export default class FroalaEditor extends FroalaEditorComponent {
               buttonsVisible: 2
             }
         },
-        // iframeStyleFiles: ['/ghost/assets/vendor.css'],
-        // imageUploadURL: 'https://i.froala.com/upload',
+        events: {
+            'paste.afterCleanup': function (clipboard_html) {
+                if (clipboard_html) {
+                    clipboard_html =  clipboard_html.replace(/<\s*(\w+).*?>/gi, '<$1>')
+                }
+                return clipboard_html;
+            }
+        },
+        imageUpload: false,
+        // iframeStyleFiles: ['/ghost/assets/krabi/style-min.css'],
+        // imageUploadURL: 'http://i.froala.com/upload',
         requestWithCORS: false,
         iframeStyle: '.fr-view { margin: 0; padding: 0; }',
         heightMin: 300,
