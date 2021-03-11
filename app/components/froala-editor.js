@@ -38,11 +38,28 @@ export default class FroalaEditor extends FroalaEditorComponent {
                     clipboard_html =  clipboard_html.replace(/<\s*(\w+).*?>/gi, '<$1>')
                 }
                 return clipboard_html;
+            },
+            'image.removed': function ($img) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/ghost/api/v3/admin/delete_image',
+                    data: {
+                        image: $img.attr('src')
+                    }
+                })
+                .done (function (data) {
+                    console.log('Image was deleted');
+                })
+                .fail (function (err) {
+                    console.log('Image delete problem: ' + JSON.stringify(err));
+                })
             }
         },
-        imageUpload: false,
+        imageUpload: true,
+        imageUploadURL: '/ghost/api/v3/admin/upload_image',
+        imageUploadParam: 'image',
+        imageUploadRemoteUrls: false,
         // iframeStyleFiles: ['/ghost/assets/krabi/style-min.css'],
-        // imageUploadURL: 'http://i.froala.com/upload',
         requestWithCORS: false,
         iframeStyle: '.fr-view { margin: 0; padding: 0; }',
         heightMin: 300,
