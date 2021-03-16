@@ -61,7 +61,7 @@ export default class FroalaEditor extends FroalaEditorComponent {
         imageUploadRemoteUrls: false,
         // iframeStyleFiles: ['/ghost/assets/krabi/style-min.css'],
         requestWithCORS: false,
-        iframeStyle: '.fr-view { margin: 0; padding: 0; }',
+        iframeStyle: '.fr-view { margin: 0; padding: 0 0 20px 0; }',
         heightMin: 300,
         iframe: true
   };
