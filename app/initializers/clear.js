@@ -30,7 +30,7 @@ export function initialize(/* application */){
             // Load popup template.
             var template = {
                 buttons: popUpButtons,
-                custom_layer: '<div class="custom-layer" style="padding:20px; width:300px; height:400px">' +
+                custom_layer: '<div class="custom-layer" style="padding:20px; width:300px; height:320px; overflow-y: scroll;">' +
                                     '<div id="old-button" style="display:none">' +
                                         '<div class="form-group">' +
                                             '<label>CTAs List</label>' +
